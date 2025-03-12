@@ -41,12 +41,13 @@ jobs:
           fi
 
           if [[ -n "$LABEL" ]]; then
+            echo "{\"labels\":[\"$LABEL\"]}" > labels.json
             gh api \
               -X POST \
               -H "Authorization: token $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github.v3+json" \
               "/repos/${{ github.repository }}/issues/$PR_NUMBER/labels" \
-              -d "{\"labels\":[\"$LABEL\"]}"
+              --input labels.json
           else
             echo "No matching label found. Skipping..."
           fi
