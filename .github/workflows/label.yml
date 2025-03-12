@@ -13,7 +13,7 @@ jobs:
 
       - name: Add Label Based on Target Branch
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
           HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
@@ -44,7 +44,7 @@ jobs:
             echo "{\"labels\":[\"$LABEL\"]}" > labels.json
             gh api \
               -X POST \
-              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Authorization: token $REPO_TOKEN" \
               -H "Accept: application/vnd.github.v3+json" \
               "/repos/${{ github.repository }}/issues/$PR_NUMBER/labels" \
               --input labels.json
